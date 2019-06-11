@@ -1,17 +1,46 @@
 {
-  "name": "react-native-picker",
-  "version": "4.3.7",
+  "_from": "github:yxyhail/react-native-picker",
+  "_id": "react-native-picker@4.3.7",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/react-native-picker",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "react-native-picker@github:yxyhail/react-native-picker",
+    "name": "react-native-picker",
+    "escapedName": "react-native-picker",
+    "rawSpec": "github:yxyhail/react-native-picker",
+    "saveSpec": "github:yxyhail/react-native-picker",
+    "fetchSpec": null,
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "github:yxyhail/react-native-picker#e8d84b35b4e8ce56cda3d904db1e126cfdbe8212",
+  "_spec": "react-native-picker@github:yxyhail/react-native-picker",
+  "_where": "/Users/yangxinyu/meicai/colonel_tool",
+  "author": {
+    "name": "zooble"
+  },
+  "bugs": {
+    "url": "https://github.com/beefe/react-native-picker/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
   "description": "A Native Picker with high performance.",
+  "homepage": "https://github.com/beefe/react-native-picker",
+  "license": "MIT",
   "main": "index.js",
-  "types": "index.d.ts",
+  "name": "react-native-picker",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/beefe/react-native-picker.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:beefe/react-native-picker.git"
-  },
-  "author": "zooble",
-  "license": "MIT",
-  "homepage": "https://github.com/beefe/react-native-picker"
+  "types": "index.d.ts",
+  "version": "4.3.7"
 }

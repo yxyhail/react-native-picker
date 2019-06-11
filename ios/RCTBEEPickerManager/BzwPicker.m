@@ -41,9 +41,13 @@
     }
     return self;
 }
+
+
+
 -(void)makeuiWith:(NSArray *)topbgColor With:(NSArray *)bottombgColor With:(NSArray *)leftbtnbgColor With:(NSArray *)rightbtnbgColor With:(NSArray *)centerbtnColor
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.frame.size.width, 40)];
+//
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,SCREEN_HEIGHT-250-40, self.frame.size.width,40)];
     view.backgroundColor = [self colorWith:topbgColor];
     [self addSubview:view];
     
@@ -51,7 +55,7 @@
     self.leftBtn.frame = CGRectMake(0, 0, 90, 40);
     self.leftBtn.font = [UIFont fontWithName:_pickerFontFamily size:[_pickerToolBarFontSize integerValue]];
     self.leftBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [self.leftBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 10.0, 0, 0)];
+    [self.leftBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 5.0, 0, 0)];
     [self.leftBtn setTitle:self.leftStr forState:UIControlStateNormal];
     [self.leftBtn setTitleColor:[self colorWith:leftbtnbgColor] forState:UIControlStateNormal];
     [self.leftBtn addTarget:self action:@selector(cancleAction) forControlEvents:UIControlEventTouchUpInside];
@@ -61,7 +65,7 @@
     self.rightBtn.frame = CGRectMake(view.frame.size.width-90,0, 90, 40);
     self.rightBtn.font = [UIFont fontWithName:_pickerFontFamily size:[_pickerToolBarFontSize integerValue]];
     self.rightBtn.contentHorizontalAlignment=UIControlContentHorizontalAlignmentRight;
-    [self.rightBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10.0)];
+    [self.rightBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 5.0)];
     [self.rightBtn setTitle:self.rightStr forState:UIControlStateNormal];
     [self.rightBtn setTitleColor:[self colorWith:rightbtnbgColor] forState:UIControlStateNormal];
     [self.rightBtn addTarget:self action:@selector(cfirmAction) forControlEvents:UIControlEventTouchUpInside];  
@@ -74,13 +78,14 @@
     [cenLabel setTextColor:[self colorWith:centerbtnColor]];
     [view addSubview:cenLabel];
 
-    self.pick = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, self.frame.size.width, self.frame.size.height - 40)];
+    self.pick = [[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250, self.frame.size.width, 250)];
     self.pick.delegate = self;
     self.pick.dataSource = self;
     self.pick.showsSelectionIndicator=YES;
     [self addSubview:self.pick];
     
     self.pick.backgroundColor=[self colorWith:bottombgColor];
+    self.pick.backgroundColor=[UIColor whiteColor];
 }
 //返回显示的列数
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -582,33 +587,34 @@
 -(void)cancleAction
 {
     NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
-    
+    NSLog(@"测试取消按钮");
     if (self.backArry.count>0) {
         [dic setValue:self.backArry forKey:@"selectedValue"];
         [dic setValue:@"cancel" forKey:@"type"];
-        
+
         [dic setValue:[self getselectIndexArry] forKey:@"selectedIndex"];
-        
+
         self.bolock(dic);
     }else{
         [self getNOselectinfo];
-        
+
         [dic setValue:self.backArry forKey:@"selectedValue"];
         [dic setValue:@"cancel" forKey:@"type"];
         [dic setValue:[self getselectIndexArry] forKey:@"selectedIndex"];
         self.bolock(dic);
     }
-    
-    
+
+
     dispatch_async(dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:.2f animations:^{
-            
+
             [self setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 250)];
-            
+
         }];
     });
 
     self.pick.hidden=YES;
+    self.pickerBgView.hidden=YES;
 }
 //按了确定按钮
 -(void)cfirmAction
@@ -646,6 +652,7 @@
             [self setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 250)];
         }];
     });
+    self.pickerBgView.hidden=YES;
 }
 -(void)selectRow
 {
@@ -664,6 +671,12 @@
         [self selectValueOne];
     }
 }
+
+-(void)setBgView:(UIView *)bgView
+{
+    self.pickerBgView = bgView;
+}
+
 //三行时候的选择哪个的逻辑
 -(void)selectValueThree
 {

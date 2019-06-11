@@ -35,6 +35,7 @@ typedef void(^backBolock)(NSDictionary * );
 
 @property (strong,nonatomic)UIButton *leftBtn;//取消
 @property (strong,nonatomic)UIButton *rightBtn;
+@property(strong,nonatomic)UIView *pickerBgView;
 
 @property(strong,nonatomic)NSString *leftStr;
 @property(strong,nonatomic)NSString *centStr;
@@ -44,6 +45,7 @@ typedef void(^backBolock)(NSDictionary * );
 @property(strong,nonatomic)NSString *pickerFontFamily;
 @property(strong,nonatomic)NSArray *pickerFontColor;
 @property(strong,nonatomic)NSString *pickerRowHeight;
+
 
 
 
@@ -80,7 +82,8 @@ typedef void(^backBolock)(NSDictionary * );
 
 
 -(instancetype)initWithFrame:(CGRect)frame dic:(NSDictionary *)dic leftStr:(NSString *)leftStr centerStr:(NSString *)centerStr rightStr:(NSString *)rightStr topbgColor:(NSArray *)topbgColor bottombgColor:(NSArray *)bottombgColor leftbtnbgColor:(NSArray *)leftbtnbgColor rightbtnbgColor:(NSArray *)rightbtnbgColor centerbtnColor:(NSArray *)centerbtnColor selectValueArry:(NSArray *)selectValueArry  weightArry:(NSArray *)weightArry
-       pickerToolBarFontSize:(NSString *)pickerToolBarFontSize  pickerFontSize:(NSString *)pickerFontSize  pickerFontColor:(NSArray *)pickerFontColor  pickerRowHeight:(NSString *)pickerRowHeight  pickerFontFamily:(NSString *)pickerFontFamily;
+       pickerToolBarFontSize:(NSString *)pickerToolBarFontSize  pickerFontSize:(NSString *)pickerFontSize  pickerFontColor:(NSArray *)pickerFontColor  pickerRowHeight:(NSString *)pickerRowHeight  pickerFontFamily:(NSString *)pickerFontFamilym;
 
 -(void)selectRow;
+-(void)setBgView:(UIView *)bgView;
 @end

@@ -13,6 +13,7 @@
 @interface RCTBEEPickerManager()
 
 @property(nonatomic,strong)BzwPicker *pick;
+@property(nonatomic,strong)UIView *bgView;
 @property(nonatomic,assign)float height;
 @property(nonatomic,weak)UIWindow * window;
 
@@ -79,8 +80,15 @@ RCT_EXPORT_METHOD(_init:(NSDictionary *)indic){
     }else{
         self.height=220;
     }
+    self.height=self.window.frame.size.height;
+    //背景色
+    self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.window.frame.size.width,self.height)];
+    _bgView.backgroundColor =[UIColor colorWithWhite:0 alpha:0.5];
     
-    self.pick=[[BzwPicker alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, self.height) dic:dataDic leftStr:pickerCancelBtnText centerStr:pickerTitleText rightStr:pickerConfirmBtnText topbgColor:pickerToolBarBg bottombgColor:pickerBg leftbtnbgColor:pickerCancelBtnColor rightbtnbgColor:pickerConfirmBtnColor centerbtnColor:pickerTitleColor selectValueArry:selectArry weightArry:weightArry pickerToolBarFontSize:pickerToolBarFontSize pickerFontSize:pickerFontSize pickerFontColor:pickerFontColor  pickerRowHeight: pickerRowHeight pickerFontFamily:pickerFontFamily];
+    self.pick=[[BzwPicker alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, self.height) dic:dataDic leftStr:pickerCancelBtnText centerStr:pickerTitleText rightStr:pickerConfirmBtnText topbgColor:pickerToolBarBg bottombgColor:pickerBg leftbtnbgColor:pickerCancelBtnColor rightbtnbgColor:pickerConfirmBtnColor centerbtnColor:pickerTitleColor selectValueArry:selectArry weightArry:weightArry pickerToolBarFontSize:pickerToolBarFontSize pickerFontSize:pickerFontSize pickerFontColor:pickerFontColor  pickerRowHeight: pickerRowHeight pickerFontFamily:pickerFontFamily ];
+    
+    //设置背景色
+    [_pick setBgView:_bgView];
     
     _pick.bolock=^(NSDictionary *backinfoArry){
 
@@ -91,37 +99,33 @@ RCT_EXPORT_METHOD(_init:(NSDictionary *)indic){
     };
 
     dispatch_async(dispatch_get_main_queue(), ^{
-
+        [self.window addSubview:_bgView];
         [self.window addSubview:_pick];
     });
-
 }
 
 RCT_EXPORT_METHOD(show){
     if (self.pick) {
-
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:.3 animations:^{
-
                 [_pick setFrame:CGRectMake(0, SCREEN_HEIGHT-self.height, SCREEN_WIDTH, self.height)];
-
             }];
         });
-    }return;
+    }
+    return;
 }
 
 RCT_EXPORT_METHOD(hide){
-
     if (self.pick) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:.3 animations:^{
                 [_pick setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, self.height)];
+
             }];
         });
     }
-
     self.pick.hidden=YES;
-
+    self.bgView.hidden=YES;
     return;
 }
 
@@ -132,7 +136,9 @@ RCT_EXPORT_METHOD(select: (NSArray*)data){
             _pick.selectValueArry = data;
             [_pick selectRow];
         });
-    }return;
+    }
+     _window = nil;
+    return;
 }
 
 RCT_EXPORT_METHOD(isPickerShow:(RCTResponseSenderBlock)getBack){

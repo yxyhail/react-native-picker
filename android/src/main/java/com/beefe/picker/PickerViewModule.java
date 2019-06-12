@@ -1,5 +1,6 @@
 package com.beefe.picker;
 
+import android.app.AlertDialog;
 import android.content.res.AssetManager;
 import android.app.Activity;
 import android.app.Dialog;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
+//import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.os.Build;
+import android.util.Log;
 
 import com.beefe.picker.util.MIUIUtils;
 import com.beefe.picker.view.OnSelectedListener;
@@ -43,41 +46,32 @@ import static android.graphics.Color.argb;
  * <p>
  * Created by heng on 16/9/5.
  * <p>
- * Edited by heng on 16/9/22.
- * 1. PopupWindow height : full screen -> assignation
+ * Edited by heng on 16/9/22. 1. PopupWindow height : full screen -> assignation
  * 2. Added pickerToolBarHeight support
  * <p>
- * Edited by heng on 2016/10/19.
- * 1. Added weights support
- * 2. Fixed return data bug
+ * Edited by heng on 2016/10/19. 1. Added weights support 2. Fixed return data
+ * bug
  * <p>
- * Edited by heng on 2016/11/16.
- * 1. Used WindowManager replace PopupWindow
- * 2. Removed method initOK() toggle() show() isPickerShow()
- * 3. Implements Application.ActivityLifecycleCallbacks
+ * Edited by heng on 2016/11/16. 1. Used WindowManager replace PopupWindow 2.
+ * Removed method initOK() toggle() show() isPickerShow() 3. Implements
+ * Application.ActivityLifecycleCallbacks
  * <p>
- * Edited by heng on 2016/11/17
- * 1. Used Dialog replace WindowManger
- * 2. Restore method show() isPickerShow()
+ * Edited by heng on 2016/11/17 1. Used Dialog replace WindowManger 2. Restore
+ * method show() isPickerShow()
  * <p>
- * Edited by heng on 2016/12/23
- * 1. Changed returnData type
- * 2. Added pickerToolBarFontSize
+ * Edited by heng on 2016/12/23 1. Changed returnData type 2. Added
+ * pickerToolBarFontSize
  * <p>
- * Edited by heng on 2016/12/26
- * 1. Fixed returnData bug
- * 2. Added pickerFontColor
- * 3. Added pickerFontSize
- * 4. Used LifecycleEventListener replace Application.ActivityLifecycleCallbacks
- * 5. Fixed other bug
- *
- * Edited by heng on 2017/01/17
- * 1. Added select(ReadableArray array, Callback callback)
- * 2. Optimization code
+ * Edited by heng on 2016/12/26 1. Fixed returnData bug 2. Added pickerFontColor
+ * 3. Added pickerFontSize 4. Used LifecycleEventListener replace
+ * Application.ActivityLifecycleCallbacks 5. Fixed other bug
+ * <p>
+ * Edited by heng on 2017/01/17 1. Added select(ReadableArray array, Callback
+ * callback) 2. Optimization code
  */
 
 public class PickerViewModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
-    
+
     private static final String FONTS = "fonts/";
     private static final String OTF = ".otf";
     private static final String TTF = ".ttf";
@@ -119,7 +113,7 @@ public class PickerViewModule extends ReactContextBaseJavaModule implements Life
 
     private static final String ERROR_NOT_INIT = "please initialize the component first";
 
-    private Dialog dialog = null;
+    private AlertDialog dialog = null;
 
     private boolean isLoop = true;
 
@@ -170,8 +164,7 @@ public class PickerViewModule extends ReactContextBaseJavaModule implements Life
             } else {
                 barViewHeight = (int) (activity.getResources().getDisplayMetrics().density * 40);
             }
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                     barViewHeight);
             barLayout.setLayoutParams(params);
 
@@ -214,7 +207,6 @@ public class PickerViewModule extends ReactContextBaseJavaModule implements Life
                 }
             });
 
-
             if (options.hasKey(PICKER_TITLE_TEXT)) {
                 titleText = options.getString(PICKER_TITLE_TEXT);
             }
@@ -250,7 +242,7 @@ public class PickerViewModule extends ReactContextBaseJavaModule implements Life
                 }
             });
 
-            if(options.hasKey(PICKER_TEXT_ELLIPSIS_LEN)){
+            if (options.hasKey(PICKER_TEXT_ELLIPSIS_LEN)) {
                 pickerTextEllipsisLen = options.getInt(PICKER_TEXT_ELLIPSIS_LEN);
             }
 
@@ -388,28 +380,28 @@ public class PickerViewModule extends ReactContextBaseJavaModule implements Life
 
             int height = barViewHeight + pickerViewHeight;
             if (dialog == null) {
-                dialog = new Dialog(activity, R.style.Dialog_Full_Screen);
-                dialog.setContentView(view);
-                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.Dialog_Full_Screen);
+                dialog = builder.create();
                 Window window = dialog.getWindow();
-                if (window != null) {
-                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                    }else{
-                        if (MIUIUtils.isMIUI()) {
-                            layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION;
-                        }else {
-                            //layoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
-                        }
-                    }
-                    layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-                    layoutParams.format = PixelFormat.TRANSPARENT;
-                    layoutParams.windowAnimations = R.style.PickerAnim;
-                    layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    layoutParams.height = height;
-                    layoutParams.gravity = Gravity.BOTTOM;
-                    window.setAttributes(layoutParams);   
+                if(window!=null){
+                    window.setGravity(Gravity.BOTTOM);
+                    window.getDecorView().setPadding(0, 0, 0, 0);
+                    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,height);
+                    window.setDimAmount(0.5f);
                 }
+                // if (window != null) {
+                // if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                // window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                // } else {
+                // if (MIUIUtils.isMIUI()) {
+                // layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION;
+                // } else {
+                // // layoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+                // }
+                // }
+//                window.setAttributes(layoutParams);
+                dialog.show();
+                dialog.setContentView(view);
             } else {
                 dialog.dismiss();
                 dialog.setContentView(view);
@@ -528,12 +520,8 @@ public class PickerViewModule extends ReactContextBaseJavaModule implements Life
         sendEvent(getReactApplicationContext(), PICKER_EVENT_NAME, map);
     }
 
-    private void sendEvent(ReactContext reactContext,
-                           String eventName,
-                           @Nullable WritableMap params) {
-        reactContext
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit(eventName, params);
+    private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
+        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
     }
 
     @Override

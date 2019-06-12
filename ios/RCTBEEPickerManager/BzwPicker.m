@@ -8,6 +8,7 @@
 
 #import "BzwPicker.h"
 #define linSpace 5
+#define pickerHeight 200
 
 @implementation BzwPicker
 
@@ -47,7 +48,7 @@
 -(void)makeuiWith:(NSArray *)topbgColor With:(NSArray *)bottombgColor With:(NSArray *)leftbtnbgColor With:(NSArray *)rightbtnbgColor With:(NSArray *)centerbtnColor
 {
 //
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,SCREEN_HEIGHT-250-40, self.frame.size.width,40)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,SCREEN_HEIGHT-pickerHeight-40, self.frame.size.width,40)];
     view.backgroundColor = [self colorWith:topbgColor];
     [self addSubview:view];
     
@@ -78,14 +79,14 @@
     [cenLabel setTextColor:[self colorWith:centerbtnColor]];
     [view addSubview:cenLabel];
 
-    self.pick = [[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250, self.frame.size.width, 250)];
+    self.pick = [[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-pickerHeight, self.frame.size.width, pickerHeight)];
     self.pick.delegate = self;
     self.pick.dataSource = self;
     self.pick.showsSelectionIndicator=YES;
     [self addSubview:self.pick];
     
     self.pick.backgroundColor=[self colorWith:bottombgColor];
-    self.pick.backgroundColor=[UIColor whiteColor];
+//    self.pick.backgroundColor=[UIColor whiteColor];
 }
 //返回显示的列数
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -608,7 +609,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:.2f animations:^{
 
-            [self setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 250)];
+            [self setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, pickerHeight)];
 
         }];
     });
@@ -649,7 +650,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:.2f animations:^{
             
-            [self setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 250)];
+            [self setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, pickerHeight)];
         }];
     });
     self.pickerBgView.hidden=YES;
@@ -958,6 +959,11 @@
         lbl.textColor = [self colorWith:_pickerFontColor];
         lbl.textAlignment = UITextAlignmentCenter;
     }
+    //分界选中线颜色
+    ((UILabel *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
+    
+     //分界选中线颜色
+    ((UILabel *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
     
     //重新加载lbl的文字内容
     lbl.text = [self pickerView:pickerView titleForRow:row forComponent:component];

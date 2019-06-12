@@ -3,6 +3,7 @@ package com.beefe.picker.view;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -159,6 +160,7 @@ public class PickerViewLinkage extends LinearLayout {
                 oneList.add(oneValue);
             }
         }
+        Log.e("name","++++++++++++++++++++++++++++++++++++++name:"+oneList);
         checkItems(loopViewOne, oneList);
 
         returnData.setItem(oneList.get(0));

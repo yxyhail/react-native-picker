@@ -1,15 +1,19 @@
 {
+  "_args": [
+    [
+      "github:yxyhail/react-native-picker",
+      "/Users/yangxinyu/meicai/colonel_tool"
+    ]
+  ],
   "_from": "github:yxyhail/react-native-picker",
-  "_id": "react-native-picker@4.3.7",
+  "_id": "react-native-picker@github:yxyhail/react-native-picker#6af175d6910f3ce4d373eefafc518ca25e339c2f",
   "_inBundle": false,
   "_integrity": "",
   "_location": "/react-native-picker",
   "_phantomChildren": {},
   "_requested": {
     "type": "git",
-    "raw": "react-native-picker@github:yxyhail/react-native-picker",
-    "name": "react-native-picker",
-    "escapedName": "react-native-picker",
+    "raw": "github:yxyhail/react-native-picker",
     "rawSpec": "github:yxyhail/react-native-picker",
     "saveSpec": "github:yxyhail/react-native-picker",
     "fetchSpec": null,
@@ -18,8 +22,8 @@
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "github:yxyhail/react-native-picker#e8d84b35b4e8ce56cda3d904db1e126cfdbe8212",
-  "_spec": "react-native-picker@github:yxyhail/react-native-picker",
+  "_resolved": "github:yxyhail/react-native-picker#6af175d6910f3ce4d373eefafc518ca25e339c2f",
+  "_spec": "github:yxyhail/react-native-picker",
   "_where": "/Users/yangxinyu/meicai/colonel_tool",
   "author": {
     "name": "zooble"

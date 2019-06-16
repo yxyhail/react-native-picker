@@ -56,7 +56,7 @@
     self.leftBtn.frame = CGRectMake(0, 0, 90, 40);
     self.leftBtn.font = [UIFont fontWithName:_pickerFontFamily size:[_pickerToolBarFontSize integerValue]];
     self.leftBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [self.leftBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 5.0, 0, 0)];
+    [self.leftBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 20.0, 0, 0)];
     [self.leftBtn setTitle:self.leftStr forState:UIControlStateNormal];
     [self.leftBtn setTitleColor:[self colorWith:leftbtnbgColor] forState:UIControlStateNormal];
     [self.leftBtn addTarget:self action:@selector(cancleAction) forControlEvents:UIControlEventTouchUpInside];
@@ -66,7 +66,7 @@
     self.rightBtn.frame = CGRectMake(view.frame.size.width-90,0, 90, 40);
     self.rightBtn.font = [UIFont fontWithName:_pickerFontFamily size:[_pickerToolBarFontSize integerValue]];
     self.rightBtn.contentHorizontalAlignment=UIControlContentHorizontalAlignmentRight;
-    [self.rightBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 5.0)];
+    [self.rightBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 20.0)];
     [self.rightBtn setTitle:self.rightStr forState:UIControlStateNormal];
     [self.rightBtn setTitleColor:[self colorWith:rightbtnbgColor] forState:UIControlStateNormal];
     [self.rightBtn addTarget:self action:@selector(cfirmAction) forControlEvents:UIControlEventTouchUpInside];  

@@ -8,7 +8,7 @@
 
 #import "BzwPicker.h"
 #define linSpace 5
-#define pickerHeight 200
+#define pickerHeight 240
 
 @implementation BzwPicker
 
@@ -56,7 +56,7 @@
     self.leftBtn.frame = CGRectMake(0, 0, 90, 40);
     self.leftBtn.font = [UIFont fontWithName:_pickerFontFamily size:[_pickerToolBarFontSize integerValue]];
     self.leftBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [self.leftBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 5.0, 0, 0)];
+    [self.leftBtn setTitleEdgeInsets:UIEdgeInsetsMake(15, 20.0, 0, 0)];
     [self.leftBtn setTitle:self.leftStr forState:UIControlStateNormal];
     [self.leftBtn setTitleColor:[self colorWith:leftbtnbgColor] forState:UIControlStateNormal];
     [self.leftBtn addTarget:self action:@selector(cancleAction) forControlEvents:UIControlEventTouchUpInside];
@@ -66,7 +66,7 @@
     self.rightBtn.frame = CGRectMake(view.frame.size.width-90,0, 90, 40);
     self.rightBtn.font = [UIFont fontWithName:_pickerFontFamily size:[_pickerToolBarFontSize integerValue]];
     self.rightBtn.contentHorizontalAlignment=UIControlContentHorizontalAlignmentRight;
-    [self.rightBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 5.0)];
+    [self.rightBtn setTitleEdgeInsets:UIEdgeInsetsMake(15, 0, 0, 20.0)];
     [self.rightBtn setTitle:self.rightStr forState:UIControlStateNormal];
     [self.rightBtn setTitleColor:[self colorWith:rightbtnbgColor] forState:UIControlStateNormal];
     [self.rightBtn addTarget:self action:@selector(cfirmAction) forControlEvents:UIControlEventTouchUpInside];  
@@ -955,15 +955,15 @@
     
     if (lbl == nil) {
         lbl = [[UILabel alloc]init];
-        lbl.font = [UIFont fontWithName:_pickerFontFamily size:[_pickerFontSize integerValue]];
-        lbl.textColor = [self colorWith:_pickerFontColor];
+        lbl.font = [UIFont systemFontOfSize:[_pickerFontSize integerValue]];
+        lbl.textColor = [UIColor blackColor];
         lbl.textAlignment = UITextAlignmentCenter;
     }
     //分界选中线颜色
-    ((UILabel *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
+    ((UILabel *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
     
      //分界选中线颜色
-    ((UILabel *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
+    ((UILabel *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
     
     //重新加载lbl的文字内容
     lbl.text = [self pickerView:pickerView titleForRow:row forComponent:component];

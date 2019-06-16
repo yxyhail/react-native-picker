@@ -132,8 +132,9 @@ public class LoopView extends View {
         paintCenterText.setTypeface(Typeface.MONOSPACE);
         paintCenterText.setTextSize(textSize);
 
+        //分界线/选中线 Paint
         paintIndicator = new Paint();
-        paintIndicator.setColor(0xffb8bbc2);
+        paintIndicator.setColor(0xff555555);
         paintIndicator.setAntiAlias(true);
 
         if (android.os.Build.VERSION.SDK_INT >= 11) {
@@ -154,7 +155,7 @@ public class LoopView extends View {
         maxTextHeight = textSize;
 
         halfCircumference = (int) (maxTextHeight * lineSpacingMultiplier * (itemsVisible - 1));
-        measuredHeight = (int) ((halfCircumference * 2) / Math.PI);
+        measuredHeight = (int) ((halfCircumference * 2) / Math.PI) ;
         radius = (int) (halfCircumference / Math.PI);
         firstLineY = (int) ((measuredHeight - lineSpacingMultiplier * maxTextHeight) / 2.0F);
         secondLineY = (int) ((measuredHeight + lineSpacingMultiplier * maxTextHeight) / 2.0F);

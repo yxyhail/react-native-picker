@@ -8,7 +8,7 @@
 
 #import "BzwPicker.h"
 #define linSpace 5
-#define pickerHeight 200
+#define pickerHeight 240
 
 @implementation BzwPicker
 
@@ -955,15 +955,15 @@
     
     if (lbl == nil) {
         lbl = [[UILabel alloc]init];
-        lbl.font = [UIFont fontWithName:_pickerFontFamily size:[_pickerFontSize integerValue]];
-        lbl.textColor = [self colorWith:_pickerFontColor];
+        lbl.font = [UIFont systemFontOfSize:[_pickerFontSize integerValue]];
+        lbl.textColor = [UIColor blackColor];
         lbl.textAlignment = UITextAlignmentCenter;
     }
     //分界选中线颜色
-    ((UILabel *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
+    ((UILabel *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
     
      //分界选中线颜色
-    ((UILabel *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
+    ((UILabel *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
     
     //重新加载lbl的文字内容
     lbl.text = [self pickerView:pickerView titleForRow:row forComponent:component];

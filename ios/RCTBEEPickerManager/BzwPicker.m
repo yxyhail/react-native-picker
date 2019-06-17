@@ -233,11 +233,12 @@
                 NSString *twostr=[NSString stringWithFormat:@"%@",self.weightArry[1]];
                 
                 double totalweight=onestr.doubleValue+twostr.doubleValue;
-                if (component==0) {
-                    return _lineWith*onestr.doubleValue/totalweight;
-                }else{
-                    return _lineWith*twostr.doubleValue/totalweight;
-                }
+//                 if (component==0) {
+//                     return _lineWith*onestr.doubleValue/totalweight;
+//                 }else{
+//                     return _lineWith*twostr.doubleValue/totalweight;
+//                 }
+                   return 100;
             }
             else{
                 if (self.weightArry.count>0) {

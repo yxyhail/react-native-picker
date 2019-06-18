@@ -9,6 +9,7 @@
 #import "BzwPicker.h"
 #define linSpace 5
 #define pickerHeight 240
+#define columnWidth 125
 
 @implementation BzwPicker
 
@@ -238,7 +239,7 @@
 //                 }else{
 //                     return _lineWith*twostr.doubleValue/totalweight;
 //                 }
-                   return 100;
+                   return columnWidth;
             }
             else{
                 if (self.weightArry.count>0) {

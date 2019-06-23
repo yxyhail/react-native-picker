@@ -9,6 +9,7 @@
 #import "BzwPicker.h"
 #define linSpace 5
 #define pickerHeight 240
+#define columnWidth 125
 
 @implementation BzwPicker
 
@@ -233,11 +234,12 @@
                 NSString *twostr=[NSString stringWithFormat:@"%@",self.weightArry[1]];
                 
                 double totalweight=onestr.doubleValue+twostr.doubleValue;
-                if (component==0) {
-                    return _lineWith*onestr.doubleValue/totalweight;
-                }else{
-                    return _lineWith*twostr.doubleValue/totalweight;
-                }
+//                 if (component==0) {
+//                     return _lineWith*onestr.doubleValue/totalweight;
+//                 }else{
+//                     return _lineWith*twostr.doubleValue/totalweight;
+//                 }
+                   return columnWidth;
             }
             else{
                 if (self.weightArry.count>0) {

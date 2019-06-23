@@ -8,10 +8,14 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -22,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  * Edited by <a href="https://github.com/shexiaoheng">heng</a> on 2016/10/20
  * 1. Added method getY
  * 2. Changed line color 0xffc5c5c5 -> 0xffb8bbc2
- *
+ * <p>
  * Edited by heng on 2016/12/26
  * 1. Added setTextColor
  * 2. Added setTextSize
@@ -50,6 +54,9 @@ public class LoopView extends View {
     private Paint paintIndicator;
 
     List<String> items;
+    private List<String> sourceItems;
+
+    private int hOffset= 0;//横向偏移量 new
 
     private int textSize;
     int maxTextHeight;
@@ -155,7 +162,7 @@ public class LoopView extends View {
         maxTextHeight = textSize;
 
         halfCircumference = (int) (maxTextHeight * lineSpacingMultiplier * (itemsVisible - 1));
-        measuredHeight = (int) ((halfCircumference * 2) / Math.PI) ;
+        measuredHeight = (int) ((halfCircumference * 2) / Math.PI);
         radius = (int) (halfCircumference / Math.PI);
         firstLineY = (int) ((measuredHeight - lineSpacingMultiplier * maxTextHeight) / 2.0F);
         secondLineY = (int) ((measuredHeight + lineSpacingMultiplier * maxTextHeight) / 2.0F);
@@ -199,12 +206,12 @@ public class LoopView extends View {
         }
     }
 
-    public void setTextColor(int color){
+    public void setTextColor(int color) {
         paintCenterText.setColor(color);
         invalidate();
     }
 
-    public void setTypeface(Typeface typeface){
+    public void setTypeface(Typeface typeface) {
         paintOuterText.setTypeface(typeface);
         paintCenterText.setTypeface(typeface);
         invalidate();
@@ -224,26 +231,26 @@ public class LoopView extends View {
         }
     }
 
-    public final void setTextEllipsisLen(int len){
+    public final void setTextEllipsisLen(int len) {
         textEllipsisLen = len;
     }
 
     public boolean hasItem(String item) {
-        int result = items.indexOf(item);
+        int result = sourceItems.indexOf(item);
         return result != -1;
     }
 
     public void setSelectedItem(String item) {
-        int selectedIndex = items.indexOf(item);
+        int selectedIndex = sourceItems.indexOf(item);
         setSelectedPosition(selectedIndex);
     }
 
     public int getItemPosition(String item) {
-        return items.indexOf(item);
+        return sourceItems.indexOf(item);
     }
 
-    public int getViewHeight(){
-       return measuredHeight;
+    public int getViewHeight() {
+        return measuredHeight;
     }
 
     public final void setSelectedPosition(int initPosition) {
@@ -265,14 +272,81 @@ public class LoopView extends View {
     }
 
     public final void setItems(List<String> items) {
+        if (sourceItems == null) {
+            sourceItems = new ArrayList<>();
+        } else {
+            sourceItems.clear();
+        }
+        sourceItems.addAll(items);
+        for (int i = 0; i < items.size(); i++) {
+            String item = items.get(i);
+            items.set(i, shortStr(item));
+        }
         this.items = items;
         remeasure();
         invalidate();
     }
 
+    public final String shortStr(String text) {
+        StringBuffer stringBuffer = new StringBuffer();
+        char[] array = text.toCharArray();
+        int sum = 0;
+        for (char c : array) {
+            if (sum >= (textEllipsisLen * 2)) {
+                break;
+            }
+            if (c > 127 || c == 94) {//中文
+                sum += 2;
+            } else {
+                sum++;
+            }
+            stringBuffer.append(c);
+        }
+        String string;
+        if (array.length != stringBuffer.toString().toCharArray().length) {
+            string = stringBuffer.toString() + "...";
+        } else {
+            string = text;
+        }
+        return string;
+    }
+
+    /**
+     * 是否是中文
+     *
+     * @param c
+     * @return
+     */
+    public static boolean isChinese(char c) {
+
+        Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+
+        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+
+                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+
+                || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+
+                || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+
+                || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+
+                || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
+
+            return true;
+
+        }
+        return false;
+    }
+
+    public final void setHOffset(int value) {
+        this.hOffset = value;
+    }
+
     public String getIndexItem(int index) {
         return items.get(index);
     }
+
     public String getSelectedItem() {
         return selectedItem;
     }
@@ -288,30 +362,31 @@ public class LoopView extends View {
     }
 
     protected final void drawText(Canvas canvas, String text, float posX, float posY, Paint paint) {
-        StringBuffer stringBuffer = new StringBuffer();
-        char[] array = text.toCharArray();
-        int sum = 0;
-        for(int i=0;i<array.length;i++){
-            if(sum >= (textEllipsisLen * 2)){
-                break;
-            }
-            char bt = array[i];
-            if(bt > 127 || bt == 94){
-                sum += 2;
-            }
-            else{
-                sum ++;
-            }
-            stringBuffer.append(String.valueOf(bt));
-        }
-        String string = "";
-        if(array.length != stringBuffer.toString().toCharArray().length){
-            string = stringBuffer.toString() + "...";
-        }
-        else{
-            string = text;
-        }
-        canvas.drawText(string, posX, posY, paint);
+//        StringBuffer stringBuffer = new StringBuffer();
+//        char[] array = text.toCharArray();
+//        int sum = 0;
+//        for (int i = 0; i < array.length; i++) {
+//            if (sum >= (textEllipsisLen * 2)) {
+//                break;
+//            }
+//            char bt = array[i];
+//            if (bt > 127 || bt == 94) {
+//                sum += 2;
+//            } else {
+//                sum++;
+//            }
+//            stringBuffer.append(String.valueOf(bt));
+//        }
+//        String string = "";
+//        if (array.length != stringBuffer.toString().toCharArray().length) {
+////            string = stringBuffer.toString() + "...";
+//            string = "  " + text.substring(0, text.length() * 2 / 3) + "...";
+//            string = text;
+//        } else {
+//            string = text;
+//        }
+//        canvas.drawText(string, posX + tValue, posY, paint);
+        canvas.drawText(text, posX + hOffset, posY, paint);
     }
 
     @Override
@@ -405,8 +480,8 @@ public class LoopView extends View {
                     // 中间条目
                     canvas.clipRect(0, 0, getWidth(), (int) (itemHeight));
                     drawText(canvas, text, getX(text, paintCenterText), getY(paintCenterText), paintCenterText);
-                    selectedItem = text;
                     selectedIndex = items.indexOf(text);
+                    selectedItem = sourceItems.get(selectedIndex);
                 } else {
                     // 其他条目
                     canvas.clipRect(0, 0, getWidth(), (int) (itemHeight));
@@ -421,10 +496,9 @@ public class LoopView extends View {
     private float getX(String text, Paint paint) {
         paint.getTextBounds(text, 0, text.length(), tempRect);
         //return (getWidth() - tempRect.width() * scaleX) / 2;
-        if((getWidth() - tempRect.width() * scaleX)/2 > 0){
+        if ((getWidth() - tempRect.width() * scaleX) / 2 > 0) {
             return (getWidth() - tempRect.width() * scaleX) / 2;
-        }
-        else{
+        } else {
             return 0;
         }
     }
@@ -432,7 +506,7 @@ public class LoopView extends View {
     /**
      * Added by shexiaoheng
      * 让字体垂直方向居中
-     * */
+     */
     private float getY(Paint paint) {
         Rect rect = new Rect(0, 0, getWidth(), maxTextHeight);
         RectF bounds = new RectF(rect);

@@ -54,9 +54,10 @@ public class LoopView extends View {
     private Paint paintIndicator;
 
     List<String> items;
-//    private List<String> sourceItems;
+    //    private List<String> sourceItems;
+    private List<String> shortItems;
 
-    private int hOffset= 0;//横向偏移量 new
+    private int hOffset = 0;//横向偏移量 new
 
     private int textSize;
     int maxTextHeight;
@@ -75,7 +76,7 @@ public class LoopView extends View {
     private String selectedItem;
     private int selectedIndex;
     private int preCurrentIndex;
-    private int textEllipsisLen = 7;
+    private int textEllipsisLen = 5;
 
 
     // 显示几个条目
@@ -273,6 +274,7 @@ public class LoopView extends View {
     }
 
     public final void setItems(List<String> items) {
+        // 修改原始  数据
 //        if (sourceItems == null) {
 //            sourceItems = new ArrayList<>();
 //        } else {
@@ -283,6 +285,20 @@ public class LoopView extends View {
 //            String item = items.get(i);
 //            items.set(i, shortStr(item));
 //        }
+
+
+        //draw Text 时 获取短数据
+        if (shortItems == null) {
+            shortItems = new ArrayList<>();
+        } else {
+            shortItems.clear();
+        }
+//        shortItems.addAll(items);
+        for (int i = 0; i < items.size(); i++) {
+            String item = items.get(i);
+            shortItems.add(shortStr(item));
+        }
+
         this.items = items;
         remeasure();
         invalidate();
@@ -363,31 +379,31 @@ public class LoopView extends View {
     }
 
     protected final void drawText(Canvas canvas, String text, float posX, float posY, Paint paint) {
-        StringBuffer stringBuffer = new StringBuffer();
-        char[] array = text.toCharArray();
-        int sum = 0;
-        for (int i = 0; i < array.length; i++) {
-            if (sum >= (textEllipsisLen * 2)) {
-                break;
-            }
-            char bt = array[i];
-            if (bt > 127 || bt == 94) {
-                sum += 2;
-            } else {
-                sum++;
-            }
-            stringBuffer.append(String.valueOf(bt));
-        }
-        String string = "";
-        if (array.length != stringBuffer.toString().toCharArray().length) {
-            string = stringBuffer.toString() + "...";
-//            string = "  " + text.substring(0, text.length() * 2 / 3) + "...";
+//        StringBuffer stringBuffer = new StringBuffer();
+//        char[] array = text.toCharArray();
+//        int sum = 0;
+//        for (int i = 0; i < array.length; i++) {
+//            if (sum >= (textEllipsisLen * 2)) {
+//                break;
+//            }
+//            char bt = array[i];
+//            if (bt > 127 || bt == 94) {
+//                sum += 2;
+//            } else {
+//                sum++;
+//            }
+//            stringBuffer.append(String.valueOf(bt));
+//        }
+//        String string = "";
+//        if (array.length != stringBuffer.toString().toCharArray().length) {
+//            string = stringBuffer.toString() + "...";
+////            string = "  " + text.substring(0, text.length() * 2 / 3) + "...";
+////            string = text;
+//        } else {
 //            string = text;
-        } else {
-            string = text;
-        }
-        canvas.drawText(string, posX + hOffset, posY, paint);
-//        canvas.drawText(text, posX + hOffset, posY, paint);
+//        }
+//        canvas.drawText(string, posX + hOffset, posY, paint);
+        canvas.drawText(text, posX + hOffset, posY, paint);
     }
 
     @Override
@@ -428,13 +444,13 @@ public class LoopView extends View {
                 while (l1 > items.size() - 1) {
                     l1 = l1 - items.size();
                 }
-                as[k1] = items.get(l1);
+                as[k1] = shortItems.get(l1);
             } else if (l1 < 0) {
                 as[k1] = "";
             } else if (l1 > items.size() - 1) {
                 as[k1] = "";
             } else {
-                as[k1] = items.get(l1);
+                as[k1] = shortItems.get(l1);
             }
             k1++;
         }
@@ -481,10 +497,15 @@ public class LoopView extends View {
                     // 中间条目
                     canvas.clipRect(0, 0, getWidth(), (int) (itemHeight));
                     drawText(canvas, text, getX(text, paintCenterText), getY(paintCenterText), paintCenterText);
-                    selectedItem = text;
-                    selectedIndex = items.indexOf(text);
+
+                    selectedIndex = shortItems.indexOf(text);
+                    selectedItem = items.get(selectedIndex);
+
 //                    selectedIndex = items.indexOf(text);
 //                    selectedItem = sourceItems.get(selectedIndex);
+
+//                    selectedItem = text;
+//                    selectedIndex = items.indexOf(text);
                 } else {
                     // 其他条目
                     canvas.clipRect(0, 0, getWidth(), (int) (itemHeight));

@@ -22,7 +22,7 @@
         android:id="@+id/loopViewThree"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1.0"
-        android:background="#3e3e3e" />
+        android:layout_weight="1.0" />
 
+<!--         android:background="#3e3e3e" -->
 </LinearLayout>

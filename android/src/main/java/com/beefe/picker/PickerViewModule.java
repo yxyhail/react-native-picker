@@ -1,6 +1,6 @@
 package com.beefe.picker;
 
-import android.app.AlertDialog;
+//import android.app.AlertDialog;
 import android.content.res.AssetManager;
 import android.app.Activity;
 import android.app.Dialog;
@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
-//import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -16,10 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.os.Build;
-import android.util.Log;
 
-import com.beefe.picker.util.MIUIUtils;
 import com.beefe.picker.view.OnSelectedListener;
 import com.beefe.picker.view.PickerViewAlone;
 import com.beefe.picker.view.PickerViewLinkage;
@@ -161,6 +158,7 @@ public class PickerViewModule extends ReactContextBaseJavaModule implements Life
                 } catch (Exception e) {
                     barViewHeight = (int) options.getDouble(PICKER_TOOL_BAR_HEIGHT);
                 }
+                barViewHeight =   (int) (activity.getResources().getDisplayMetrics().density * barViewHeight);
             } else {
                 barViewHeight = (int) (activity.getResources().getDisplayMetrics().density * 40);
             }

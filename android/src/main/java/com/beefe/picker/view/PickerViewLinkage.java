@@ -160,7 +160,6 @@ public class PickerViewLinkage extends LinearLayout {
                 oneList.add(oneValue);
             }
         }
-        Log.e("name", "++++++++++++++++++++++++++++++++++++++name:" + oneList);
         checkItems(loopViewOne, oneList);
 
         returnData.setItem(oneList.get(0));

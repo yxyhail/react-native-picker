@@ -74,7 +74,7 @@ public class LoopView extends View {
     private String selectedItem;
     private int selectedIndex;
     private int preCurrentIndex;
-    private int textEllipsisLen = 7;
+    private int textEllipsisLen = 5;
 
 
     // 显示几个条目

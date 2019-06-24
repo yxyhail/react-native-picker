@@ -54,7 +54,7 @@ public class LoopView extends View {
     private Paint paintIndicator;
 
     List<String> items;
-    private List<String> sourceItems;
+//    private List<String> sourceItems;
 
     private int hOffset= 0;//横向偏移量 new
 
@@ -71,10 +71,11 @@ public class LoopView extends View {
 
     int totalScrollY;
     int initPosition;
+
     private String selectedItem;
     private int selectedIndex;
     private int preCurrentIndex;
-    private int textEllipsisLen = 5;
+    private int textEllipsisLen = 7;
 
 
     // 显示几个条目
@@ -236,17 +237,17 @@ public class LoopView extends View {
     }
 
     public boolean hasItem(String item) {
-        int result = sourceItems.indexOf(item);
+        int result = items.indexOf(item);
         return result != -1;
     }
 
     public void setSelectedItem(String item) {
-        int selectedIndex = sourceItems.indexOf(item);
+        int selectedIndex = items.indexOf(item);
         setSelectedPosition(selectedIndex);
     }
 
     public int getItemPosition(String item) {
-        return sourceItems.indexOf(item);
+        return items.indexOf(item);
     }
 
     public int getViewHeight() {
@@ -272,16 +273,16 @@ public class LoopView extends View {
     }
 
     public final void setItems(List<String> items) {
-        if (sourceItems == null) {
-            sourceItems = new ArrayList<>();
-        } else {
-            sourceItems.clear();
-        }
-        sourceItems.addAll(items);
-        for (int i = 0; i < items.size(); i++) {
-            String item = items.get(i);
-            items.set(i, shortStr(item));
-        }
+//        if (sourceItems == null) {
+//            sourceItems = new ArrayList<>();
+//        } else {
+//            sourceItems.clear();
+//        }
+//        sourceItems.addAll(items);
+//        for (int i = 0; i < items.size(); i++) {
+//            String item = items.get(i);
+//            items.set(i, shortStr(item));
+//        }
         this.items = items;
         remeasure();
         invalidate();
@@ -362,31 +363,31 @@ public class LoopView extends View {
     }
 
     protected final void drawText(Canvas canvas, String text, float posX, float posY, Paint paint) {
-//        StringBuffer stringBuffer = new StringBuffer();
-//        char[] array = text.toCharArray();
-//        int sum = 0;
-//        for (int i = 0; i < array.length; i++) {
-//            if (sum >= (textEllipsisLen * 2)) {
-//                break;
-//            }
-//            char bt = array[i];
-//            if (bt > 127 || bt == 94) {
-//                sum += 2;
-//            } else {
-//                sum++;
-//            }
-//            stringBuffer.append(String.valueOf(bt));
-//        }
-//        String string = "";
-//        if (array.length != stringBuffer.toString().toCharArray().length) {
-////            string = stringBuffer.toString() + "...";
+        StringBuffer stringBuffer = new StringBuffer();
+        char[] array = text.toCharArray();
+        int sum = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (sum >= (textEllipsisLen * 2)) {
+                break;
+            }
+            char bt = array[i];
+            if (bt > 127 || bt == 94) {
+                sum += 2;
+            } else {
+                sum++;
+            }
+            stringBuffer.append(String.valueOf(bt));
+        }
+        String string = "";
+        if (array.length != stringBuffer.toString().toCharArray().length) {
+            string = stringBuffer.toString() + "...";
 //            string = "  " + text.substring(0, text.length() * 2 / 3) + "...";
 //            string = text;
-//        } else {
-//            string = text;
-//        }
-//        canvas.drawText(string, posX + tValue, posY, paint);
-        canvas.drawText(text, posX + hOffset, posY, paint);
+        } else {
+            string = text;
+        }
+        canvas.drawText(string, posX + hOffset, posY, paint);
+//        canvas.drawText(text, posX + hOffset, posY, paint);
     }
 
     @Override
@@ -480,8 +481,10 @@ public class LoopView extends View {
                     // 中间条目
                     canvas.clipRect(0, 0, getWidth(), (int) (itemHeight));
                     drawText(canvas, text, getX(text, paintCenterText), getY(paintCenterText), paintCenterText);
+                    selectedItem = text;
                     selectedIndex = items.indexOf(text);
-                    selectedItem = sourceItems.get(selectedIndex);
+//                    selectedIndex = items.indexOf(text);
+//                    selectedItem = sourceItems.get(selectedIndex);
                 } else {
                     // 其他条目
                     canvas.clipRect(0, 0, getWidth(), (int) (itemHeight));

@@ -18,7 +18,7 @@ import java.util.Arrays;
 
 /**
  * Created by <a href="https://github.com/shexiaoheng">heng</a> on 2016/09/01
- *
+ * <p>
  * Edited by heng on 2016/12/26
  * 1. Fixed returnData bug
  * 2. Added LoopView TextColor and TextSize support
@@ -160,7 +160,7 @@ public class PickerViewLinkage extends LinearLayout {
                 oneList.add(oneValue);
             }
         }
-        Log.e("name","++++++++++++++++++++++++++++++++++++++name:"+oneList);
+        Log.e("name", "++++++++++++++++++++++++++++++++++++++name:" + oneList);
         checkItems(loopViewOne, oneList);
 
         returnData.setItem(oneList.get(0));
@@ -194,7 +194,7 @@ public class PickerViewLinkage extends LinearLayout {
             threeList = arrayToList(sunArray);
             checkItems(loopViewThree, threeList);
 
-            if(threeList!=null&&threeList.size()>0){
+            if (threeList != null && threeList.size() > 0) {
                 returnData2.setItem(threeList.get(0));
                 returnData2.setIndex(loopViewThree.getSelectedIndex());
                 if (curSelectedList.size() > 2) {
@@ -237,7 +237,7 @@ public class PickerViewLinkage extends LinearLayout {
                     checkItems(loopViewThree, threeList);
                     returnData2 = new ReturnData();
 
-                    if (threeList!=null&&threeList.size()>0){
+                    if (threeList != null && threeList.size() > 0) {
                         returnData2.setItem(threeList.get(0));
                         returnData2.setIndex(loopViewThree.getSelectedIndex());
                         curSelectedList.set(2, returnData2);
@@ -258,7 +258,7 @@ public class PickerViewLinkage extends LinearLayout {
                     int arrSize = arr.size();
                     //fix IndexOutOfBoundsException
                     //by zooble @2018-1-10
-                    if(index > arrSize){
+                    if (index > arrSize) {
                         index = arrSize - 1;
                     }
                     ReadableMap childMap = arr.getMap(index);
@@ -280,7 +280,7 @@ public class PickerViewLinkage extends LinearLayout {
 
                     returnData2 = new ReturnData();
 
-                    if (threeList!=null&&threeList.size()>0){
+                    if (threeList != null && threeList.size() > 0) {
                         returnData2.setItem(threeList.get(0));
                         returnData2.setIndex(loopViewThree.getSelectedIndex());
                         curSelectedList.set(2, returnData2);
@@ -300,14 +300,14 @@ public class PickerViewLinkage extends LinearLayout {
                     //fix IndexOutOfBoundsException
                     //by zooble @2018-1-10
                     int arrOneSize = oneList.size();
-                    if(selectOneIndex >= arrOneSize){
+                    if (selectOneIndex >= arrOneSize) {
                         selectOneIndex = arrOneSize - 1;
                     }
                     int arrTwoSize = twoList.size();
-                    if(selectTwoIndex >= arrTwoSize){
+                    if (selectTwoIndex >= arrTwoSize) {
                         selectTwoIndex = arrTwoSize - 1;
                     }
-                    
+
                     returnData = new ReturnData();
                     returnData.setItem(oneList.get(selectOneIndex));
                     returnData.setIndex(loopViewOne.getSelectedIndex());
@@ -592,7 +592,7 @@ public class PickerViewLinkage extends LinearLayout {
         threeList = arrayToList(sunArray);
     }
 
-    public void setTextSize(float size){
+    public void setTextSize(float size) {
         switch (curRow) {
             case 2:
                 loopViewTwo.setHOffset(-80);
@@ -608,7 +608,7 @@ public class PickerViewLinkage extends LinearLayout {
         }
     }
 
-    public void setTypeface(Typeface typeface){
+    public void setTypeface(Typeface typeface) {
         switch (curRow) {
             case 2:
                 loopViewOne.setTypeface(typeface);
@@ -622,7 +622,7 @@ public class PickerViewLinkage extends LinearLayout {
         }
     }
 
-    public void setTextEllipsisLen(int len){
+    public void setTextEllipsisLen(int len) {
         switch (curRow) {
             case 2:
                 loopViewOne.setTextEllipsisLen(len);
@@ -636,7 +636,7 @@ public class PickerViewLinkage extends LinearLayout {
         }
     }
 
-    public void setTextColor(int color){
+    public void setTextColor(int color) {
         switch (curRow) {
             case 2:
                 loopViewOne.setTextColor(color);

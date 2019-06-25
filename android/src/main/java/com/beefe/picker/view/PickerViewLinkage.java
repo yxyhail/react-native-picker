@@ -594,8 +594,9 @@ public class PickerViewLinkage extends LinearLayout {
     public void setTextSize(float size) {
         switch (curRow) {
             case 2:
-                loopViewTwo.setHOffset(-80);
-                loopViewOne.setHOffset(80);
+                int hOffset = (int) (getContext().getResources().getDisplayMetrics().density * 10);
+                loopViewTwo.setHOffset(-hOffset);
+                loopViewOne.setHOffset(hOffset);
                 loopViewOne.setTextSize(size);
                 loopViewTwo.setTextSize(size);
                 break;

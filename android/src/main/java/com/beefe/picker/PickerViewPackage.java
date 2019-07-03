@@ -1,5 +1,6 @@
 package com.beefe.picker;
 
+import com.beefe.picker.component.RNPickerManager;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
@@ -28,6 +29,8 @@ public class PickerViewPackage implements ReactPackage {
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-        return  Collections.emptyList();
+        return Collections.<ViewManager>singletonList(
+                new RNPickerManager()
+        );
     }
 }

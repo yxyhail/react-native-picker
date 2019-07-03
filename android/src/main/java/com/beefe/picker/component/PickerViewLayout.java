@@ -39,7 +39,7 @@ public class PickerViewLayout extends LinearLayout {
                 }
                 this.addView(pickerViewLinkage);
                 pickerViewLinkage.setPickerData(pickerData, weights);
-                pickerViewLinkage.setIsLoop(false);
+//                pickerViewLinkage.setIsLoop(false);
                 break;
             default:
                 if (pickerViewAlone == null) {
@@ -47,7 +47,7 @@ public class PickerViewLayout extends LinearLayout {
                 }
                 this.addView(pickerViewAlone);
                 pickerViewAlone.setPickerData(pickerData, weights);
-                pickerViewAlone.setIsLoop(false);
+//                pickerViewAlone.setIsLoop(false);
 
                 break;
         }

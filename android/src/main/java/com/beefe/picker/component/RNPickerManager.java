@@ -42,7 +42,7 @@ public class RNPickerManager extends SimpleViewManager<PickerViewLayout> {
         return pickerViewLayout;
     }
 
-    @ReactProp(name = "data")
+    @ReactProp(name = "pickerData")
     public void setData(final PickerViewLayout view, ReadableArray data) {
         view.setPickerData(data, null);
         view.setSelectedListener(new OnSelectedListener() {

@@ -1,14 +1,11 @@
-// Type definitions for react-native-picker
-// Project: https://github.com/beefe/react-native-picker
-// Definitions by: Kyle Roach <https://github.com/iRoachie>
-// TypeScript Version: 2.3.2
+declare module 'react-native-picker' {
 
-/**
- * Options to create a picker object
- *
- * @interface PickerOptions
- */
-interface PickerOptions {
+  /**
+   * Options to create a picker object
+   *
+   * @interface PickerOptions
+   */
+  interface PickerOptions {
     /**
      * Items to be passed into the picker
      *
@@ -204,10 +201,10 @@ interface PickerOptions {
      * @memberof PickerOptions
      */
     onPickerSelect?(item: any[]): void
-}
+  }
 
 
-export default class Picker {
+  export default class Picker {
     /**
      * Creates a new Picker objects
      *
@@ -267,4 +264,49 @@ export default class Picker {
      * @memberof Picker
      */
     static isPickerShow(fn?: (err: any, message: any) => void): boolean
+  }
 }
+
+
+declare module 'react-native-picker/PickerView' {
+  import { Component } from 'react'
+  import { StyleObj } from 'react-native/Libraries/StyleSheet/StyleSheetTypes'
+
+  export interface PickerViewProperties {
+    pickerFontSize?: number;
+
+    /**
+     * Items to be passed into the picker
+     *
+     * Default is an empty array
+     *
+     * @type {any[]}
+     * @memberof PickerOptions
+     */
+    pickerData?: any[];
+
+    /**
+     * The selected item in the picker
+     *
+     * Accepts the item in an array
+     * Example: ['selected']
+     *
+     * Default is an empty array
+     *
+     * @type {any[]}
+     */
+    selectedValue?: any[];
+
+    isLoop?: boolean;
+    /**
+     * style prop as StyleObj
+     */
+    style?: StyleObj;
+
+    onPickerSelect?(data: any[]): void;
+  }
+
+  export default class PickerView extends Component<PickerViewProperties> {
+  }
+}
+
